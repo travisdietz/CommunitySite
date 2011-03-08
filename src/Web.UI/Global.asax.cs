@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CommunitySite.Core.Dependencies;
+using StructureMap;
 
 namespace Web.UI
 {
@@ -32,9 +35,33 @@ namespace Web.UI
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            Registrar.RegisterDependencies();
+            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+        }
+    }
+
+    public class StructureMapControllerFactory 
+        : DefaultControllerFactory
+    {
+        protected override IController GetControllerInstance(
+            RequestContext requestContext, Type controllerType)
+        {
+            IController result = null;
+            try
+            {
+                if (controllerType == null) return base.GetControllerInstance(requestContext, controllerType);
+                result = ObjectFactory.GetInstance(controllerType) as Controller;
+
+            }
+            catch (StructureMapException)
+            {
+                Debug.WriteLine(ObjectFactory.WhatDoIHave());
+                throw;
+            }
+
+            return result;
         }
     }
 }
