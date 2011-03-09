@@ -1,4 +1,3 @@
-using CommunitySite.Core.Domain;
 using NHibernate;
 
 namespace CommunitySite.Core.Data.NHibernate
@@ -7,18 +6,17 @@ namespace CommunitySite.Core.Data.NHibernate
     {
         readonly ISessionFactory _sessionFactory;
 
-
         public NHibernateRepository(ISessionFactory sessionFactory)
         {
             _sessionFactory = sessionFactory;
         }
 
 
-        public void Save(Member member)
+        public void Save<T>(T item)
         {
             using(var session = _sessionFactory.OpenSession())
             {
-                session.SaveOrUpdate(member);
+                session.SaveOrUpdate(item);
             }
         }
     }

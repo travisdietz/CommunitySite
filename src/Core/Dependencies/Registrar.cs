@@ -35,6 +35,7 @@ namespace CommunitySite.Core.Dependencies
         {
             For<Repository>().Use<NHibernateRepository>();
             For<MemberRepository>().Use<NHibernateMemberRepository>();
+
             For<ISessionFactory>().Singleton().TheDefault.Is.ConstructedBy(() => 
                 ObjectFactory.GetInstance<AutoMappedConfiguration>().CreateSessionFactory());
         }

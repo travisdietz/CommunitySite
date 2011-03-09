@@ -4,6 +4,6 @@ namespace CommunitySite.Core.Data
 {
     public interface Repository
     {
-        void Save(Member member);
+        void Save<T>(T item);
     }
 }
