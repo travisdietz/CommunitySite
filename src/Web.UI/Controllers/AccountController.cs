@@ -25,6 +25,9 @@ namespace CommunitySite.Web.UI.Controllers
         [HttpPost]
         public ActionResult Register(RegistrationModel registrationModel)
         {
+            if (!ModelState.IsValid)
+                return View("Register");
+
             var member = new Member
                              {
                                  FirstName = registrationModel.FirstName,
@@ -33,6 +36,7 @@ namespace CommunitySite.Web.UI.Controllers
                                  Password = registrationModel.Password,
                                  Email = registrationModel.Email
                              };
+            
             _memberRepository.Save(member);
             _authenticationService.SignIn(member.Username);
             return RedirectToAction("Profile");
