@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
+using CommunitySite.Core.Dependencies;
 
 namespace CommunitySite.Web.UI
 {
@@ -28,6 +30,8 @@ namespace CommunitySite.Web.UI
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            Registrar.RegisterDependencies();
+            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }

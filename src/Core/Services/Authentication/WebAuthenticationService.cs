@@ -6,7 +6,7 @@ namespace CommunitySite.Core.Services.Authentication
     {
         public void SignIn(string username)
         {
-            FormsAuthentication.SetAuthCookie(username);
+            FormsAuthentication.SetAuthCookie(username, false);
         }
     }
 }

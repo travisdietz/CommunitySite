@@ -31,8 +31,6 @@ namespace CommunitySite.Specifications.Registration
 
         It should_load_an_empty_registration_form = () =>
             _results.AssertViewRendered().ViewData.Model.ShouldBe(typeof(RegistrationModel));
-
-        static ActionResult _results;
     }
 
     public class When_submitting_valid_and_complete_registration_information 
